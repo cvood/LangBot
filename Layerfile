@@ -1,4 +1,3 @@
-
 FROM vm/ubuntu:18.04
 
 # install docker-ce (from tutorial for ubuntu)
@@ -19,11 +18,10 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-c
 # copy the root (i.e., repository root) to /root in the runner
 COPY / /root
 
-docker network create langbot-network
-RUN docker-compose up -d
-
-docker pull registry.cn-hangzhou.aliyuncs.com/gewe/gewe:latest
-docker tag registry.cn-hangzhou.aliyuncs.com/gewe/gewe gewe
+RUN docker network create langbot-network && \
+    docker-compose up -d && \
+    docker pull registry.cn-hangzhou.aliyuncs.com/gewe/gewe:latest && \
+    docker tag registry.cn-hangzhou.aliyuncs.com/gewe/gewe gewe
 
 # TODO: change port to whatever is configured in your docker-compose.yml
 EXPOSE WEBSITE localhost:5300
